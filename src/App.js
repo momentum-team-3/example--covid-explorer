@@ -2,11 +2,12 @@
 
 import React from 'react'
 import './App.css'
+import CountryData from './components/CountryData'
+import CountryList from './components/CountryList'
 
 class App extends React.Component {
   constructor () {
     super()
-    console.log('constructor')
     this.state = {
       selectedCountry: null,
       countries: []
@@ -14,7 +15,6 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    console.log('componentDidMount')
     fetch('https://api.covid19api.com/countries')
       .then(response => response.json())
       .then(data => {
@@ -31,13 +31,14 @@ class App extends React.Component {
   }
 
   render () {
-    console.log('render')
-
     let body
     if (this.state.selectedCountry !== null) {
       body = (
         <div>
-          <h2>{this.state.selectedCountry.Country}</h2>
+          <CountryData
+            name={this.state.selectedCountry.Country}
+            slug={this.state.selectedCountry.Slug}
+          />
           <p>
             <button onClick={() => this.setState({ selectedCountry: null })}>
             Back to country list
@@ -47,18 +48,10 @@ class App extends React.Component {
       )
     } else {
       body = (
-        <ul>
-          {this.state.countries.map(country => (
-            <li key={country.ISO2}>
-              <button onClick={() => this.setState({
-                selectedCountry: country
-              })}
-              >
-                {country.Country}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <CountryList
+          countries={this.state.countries}
+          onSelect={country => this.setState({ selectedCountry: country })}
+        />
       )
     }
 
