@@ -4,12 +4,21 @@ import React from 'react'
 import './App.css'
 import CountryData from './components/CountryData'
 import CountryList from './components/CountryList'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom'
+
+function About () {
+  return <h2>About</h2>
+}
 
 class App extends React.Component {
   constructor () {
     super()
     this.state = {
-      selectedCountry: null,
       countries: []
     }
   }
@@ -31,35 +40,27 @@ class App extends React.Component {
   }
 
   render () {
-    let body
-    if (this.state.selectedCountry !== null) {
-      body = (
-        <div>
-          <CountryData
-            name={this.state.selectedCountry.Country}
-            slug={this.state.selectedCountry.Slug}
-          />
-          <p>
-            <button onClick={() => this.setState({ selectedCountry: null })}>
-            Back to country list
-            </button>
-          </p>
-        </div>
-      )
-    } else {
-      body = (
-        <CountryList
-          countries={this.state.countries}
-          onSelect={country => this.setState({ selectedCountry: country })}
-        />
-      )
-    }
-
     return (
-      <div className='App'>
-        <h1>COVID Explorer</h1>
-        {body}
-      </div>
+      <Router>
+        <div className='App'>
+          <h1>COVID Explorer</h1>
+          <ul>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to='/about/'>About</Link></li>
+          </ul>
+          <hr />
+          <Switch>
+            <Route path='/about/'>
+              <About />
+            </Route>
+            <Route path='/country/:slug/' component={CountryData} />
+            <Route path='/'>
+              <CountryList countries={this.state.countries} />
+            </Route>
+          </Switch>
+
+        </div>
+      </Router>
     )
   }
 }

@@ -10,17 +10,23 @@ class CountryData extends React.Component {
   }
 
   componentDidMount () {
-    console.log('CountryData componentDidMount')
-    fetch('https://api.covid19api.com/dayone/country/' + this.props.slug + '/status/confirmed')
+    const slug = this.props.match.params.slug
+    fetch('https://api.covid19api.com/dayone/country/' + slug + '/status/confirmed')
       .then(res => res.json())
       .then(data => this.setState({ casesByDay: data }))
   }
 
   render () {
     const records = this.state.casesByDay
+    let name = this.props.match.params.slug
+    if (records.length > 0) {
+      name = records[0].Country
+    }
+
     return (
       <div className='CountryData'>
-        <h2>{this.props.name}</h2>
+
+        <h2>{name}</h2>
         <ul>
           {records.map((record, idx) => (
             <li key={idx}>

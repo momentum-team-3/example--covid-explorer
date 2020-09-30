@@ -1,15 +1,17 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 function CountryList (props) {
-  const { countries, onSelect } = props
+  const { countries } = props
 
   return (
     <ul>
       {countries.map(country => (
         <li key={country.ISO2}>
-          <button onClick={() => onSelect(country)}>
+          <Link to={`/country/${country.Slug}/`}>
             {country.Country}
-          </button>
+          </Link>
         </li>
       ))}
     </ul>
