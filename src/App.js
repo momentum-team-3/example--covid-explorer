@@ -7,13 +7,8 @@ import CountryList from './components/CountryList'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
-
-function About () {
-  return <h2>About</h2>
-}
 
 class App extends React.Component {
   constructor () {
@@ -44,20 +39,17 @@ class App extends React.Component {
       <Router>
         <div className='App'>
           <h1>COVID Explorer</h1>
-          <ul>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/about/'>About</Link></li>
-          </ul>
-          <hr />
-          <Switch>
-            <Route path='/about/'>
-              <About />
-            </Route>
-            <Route path='/country/:slug/' component={CountryData} />
-            <Route path='/'>
-              <CountryList countries={this.state.countries} />
-            </Route>
-          </Switch>
+          <div className='container'>
+            <CountryList countries={this.state.countries} />
+            <Switch>
+              <Route path='/country/:slug/'>
+                <CountryData />
+              </Route>
+              <Route path='/'>
+                <div>Pick a country to see its data.</div>
+              </Route>
+            </Switch>
+          </div>
 
         </div>
       </Router>

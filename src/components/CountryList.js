@@ -6,15 +6,17 @@ function CountryList (props) {
   const { countries } = props
 
   return (
-    <ul>
-      {countries.map(country => (
-        <li key={country.ISO2}>
-          <Link to={`/country/${country.Slug}/`}>
-            {country.Country}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div className='CountryList'>
+      <ul>
+        {countries.map(country => (
+          <li key={country.ISO2}>
+            <Link to={`/country/${country.Slug}/`}>
+              {country.Country}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
